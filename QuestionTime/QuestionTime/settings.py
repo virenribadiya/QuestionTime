@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'users',
+    'questions',
     
     'django_registration',
 
@@ -129,7 +130,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'users.CustomUser' # django will know that we are talking about CustomUser class in models.py of users.
+AUTH_USER_MODEL = 'users.CustomUser' 
+# django will know that we are talking about CustomUser class in models.py of users.
 
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
