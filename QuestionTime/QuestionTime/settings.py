@@ -130,6 +130,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS =[
+    BASE_DIR / "static"
+]
+
 AUTH_USER_MODEL = 'users.CustomUser' 
 # django will know that we are talking about CustomUser class in models.py of users.
 
