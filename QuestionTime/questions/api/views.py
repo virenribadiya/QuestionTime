@@ -23,6 +23,11 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def get_queryset(self):
+        import time
+        time.sleep(2)
+        return super().get_queryset()
+
 # /questions/slug/answer/
 
 class AnswerCreateAPIView(generics.CreateAPIView):
