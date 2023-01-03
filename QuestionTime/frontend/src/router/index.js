@@ -19,7 +19,7 @@ const routes = [
     props:true,
   },
   {
-    path: '/ask/',
+    path: '/ask/:slug?', // question mark sign makes the slug optional.
     name: 'question-editor',
     component:QuestionEditor, 
     props:true,
