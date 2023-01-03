@@ -66,7 +66,7 @@ class AnswerListAPIView(generics.ListAPIView):
 
 class AnswerLikeAPIView(APIView):
     """Allow users to add/remove a like to/from an answer instance."""
-
+    
     serializer_class = AnswerSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = "uuid"

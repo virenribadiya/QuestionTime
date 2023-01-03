@@ -15,5 +15,8 @@ urlpatterns = [
     
     path("answers/<uuid:uuid>/",qv.AnswerRUDAPIView.as_view(),name='answer-detail'),
 
-    path("answers/<uuid:uuid>/likes",qv.AnswerLikeAPIView.as_view(),name='answer-like')
+    path("answers/<uuid:uuid>/likes/",qv.AnswerLikeAPIView.as_view(),name='answer-like')
 ]
+
+#django-vs-node-which-is-better-6ZdHV8OD
+#ca64fc41-bb35-438c-b051-12e578c42fd4
