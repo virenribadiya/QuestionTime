@@ -9,6 +9,26 @@
             <p>
                 {{ question.created_at }}
             </p>
+
+            <div v-if="userHasAnswered">
+                <p class="answer-added">You've written an answer!</p>
+            </div>
+
+            <div v-else-if="showForm">
+                <form @submit.prevent="onSubmit">
+                    <p>Answer the Question!</p>
+                    <textarea v-model="newAnswerBody" class="form-control" placeholder="Share your Knowledge!" rows="10"></textarea>
+                    <button type="submit" class="btn btn-success my-3">Submit Your Answer</button>
+                </form>
+                <p v-if="error" class="error mt-2">{{error}}</p>
+            </div>
+
+            <div v-else>
+                <button class="btn btn-success" @click="showForm=true">
+                    Answer the Question
+                </button>
+            </div>
+
         </div>
         <div v-else class="error text-center h3">
             404 - Question Not Found
@@ -53,6 +73,10 @@ export default {
             answers: [],
             next: null,
             loadingAnswers: false,
+            userHasAnswered: false,
+            showForm:false,
+            newAnswerBody:null,
+            error:null,
         }
     },
     methods:
@@ -65,6 +89,7 @@ export default {
             try {
                 const response = await axios.get(endpoint);
                 this.question = response.data;
+                this.userHasAnswered = response.data.user_has_answered;
                 this.setPageTitle(response.data.content);
             } catch (error) {
                 console.log(error.response);
@@ -73,6 +98,8 @@ export default {
                 alert(error.response.statusText);
             }
         },
+
+
         async getQuestionAnswers() {
             let endpoint = `/api/v1/questions/${this.slug}/answers/`;
             if (this.next) {
@@ -97,6 +124,27 @@ export default {
                 console.log(error.response);
                 alert(error.response.statusText);
             }
+        },
+
+        async onSubmit(){
+            if(!this.newAnswerBody){
+                this.error = "You can't send an empty answer!"
+                return
+            }
+            const endpoint = `/api/v1/questions/${this.slug}/answer/`;
+            try {
+                const response = await axios.post(endpoint,{body:this.newAnswerBody})
+                this.answers.unshift(response.data);
+                this.newAnswerBody = null;
+                this.showForm = false;
+                this.userHasAnswered = true;
+                if(this.error){
+                    this.error = null;
+                }
+            } catch (error) {
+                console.log(error.response);
+                alert(error.response.statusText);
+            }
         }
     },
     created() {
@@ -116,5 +164,9 @@ export default {
 
 .error {
     color: #dc3545;
+}
+.answer-added{
+    font-weight: bold;
+    color: green;
 }
 </style>
