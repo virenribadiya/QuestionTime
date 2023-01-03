@@ -10,7 +10,7 @@
                 {{ question.created_at }}
             </p>
 
-            <QuestionActions v-if="isQuestionAuthor" :slug="question.slug"/>
+            <QuestionActions v-if="isQuestionAuthor" :slug="question.slug" />
 
             <div v-if="userHasAnswered">
                 <p class="answer-added">You've written an answer!</p>
@@ -19,14 +19,15 @@
             <div v-else-if="showForm">
                 <form @submit.prevent="onSubmit">
                     <p>Answer the Question!</p>
-                    <textarea v-model="newAnswerBody" class="form-control" placeholder="Share your Knowledge!" rows="10"></textarea>
+                    <textarea v-model="newAnswerBody" class="form-control" placeholder="Share your Knowledge!"
+                        rows="10"></textarea>
                     <button type="submit" class="btn btn-success my-3">Submit Your Answer</button>
                 </form>
-                <p v-if="error" class="error mt-2">{{error}}</p>
+                <p v-if="error" class="error mt-2">{{ error }}</p>
             </div>
 
             <div v-else>
-                <button class="btn btn-success" @click="showForm=true">
+                <button class="btn btn-success" @click="showForm = true">
                     Answer the Question
                 </button>
             </div>
@@ -37,8 +38,8 @@
         </div>
         <hr>
 
-        <div v-if="question" class="">
-            <AnsewerComponent v-for="answer in answers" :key="answer.uuid" :answer="answer" />
+        <div v-if="question">
+            <AnsewerComponent v-for="answer in answers" :key="answer.uuid" :answer="answer" :requestUser="requestUser"/>
         </div>
         <!-- {{answers}} -->
         <div class="my-4">
@@ -78,21 +79,20 @@ export default {
             next: null,
             loadingAnswers: false,
             userHasAnswered: false,
-            showForm:false,
-            newAnswerBody:null,
-            error:null,
+            showForm: false,
+            newAnswerBody: null,
+            error: null,
             requestUser: null,
         }
     },
-    computed:{
-        isQuestionAuthor()
-        {
-            return (this.question.author == this.requestUser); 
+    computed: {
+        isQuestionAuthor() {
+            return (this.question.author == this.requestUser);
         }
     },
     methods:
     {
-        setRequestUser(){
+        setRequestUser() {
             this.requestUser = window.localStorage.getItem("username");
         },
         setPageTitle(title) {
@@ -111,10 +111,7 @@ export default {
                 this.setPageTitle(title);
                 alert(error.response.statusText);
             }
-        },
-
-
-        async getQuestionAnswers() {
+        }, async getQuestionAnswers() {
             let endpoint = `/api/v1/questions/${this.slug}/answers/`;
             if (this.next) {
                 endpoint = this.next;
@@ -139,20 +136,19 @@ export default {
                 alert(error.response.statusText);
             }
         },
-
-        async onSubmit(){
-            if(!this.newAnswerBody){
+        async onSubmit() {
+            if (!this.newAnswerBody) {
                 this.error = "You can't send an empty answer!"
                 return
             }
             const endpoint = `/api/v1/questions/${this.slug}/answer/`;
             try {
-                const response = await axios.post(endpoint,{body:this.newAnswerBody})
+                const response = await axios.post(endpoint, { body: this.newAnswerBody })
                 this.answers.unshift(response.data);
                 this.newAnswerBody = null;
                 this.showForm = false;
                 this.userHasAnswered = true;
-                if(this.error){
+                if (this.error) {
                     this.error = null;
                 }
             } catch (error) {
@@ -180,7 +176,8 @@ export default {
 .error {
     color: #dc3545;
 }
-.answer-added{
+
+.answer-added {
     font-weight: bold;
     color: green;
 }

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/Home.vue'
 import QuestionEditor from '../views/QuestionEditor.vue'
+import AnswerEditor from '../views/AnswerEditor.vue'
 
 const routes = [
   {
@@ -22,6 +23,12 @@ const routes = [
     path: '/ask/:slug?', // question mark sign makes the slug optional.
     name: 'question-editor',
     component:QuestionEditor, 
+    props:true,
+  },
+  {
+    path: '/answer/:uuid', // question mark sign makes the slug optional.
+    name: 'answer-editor',
+    component:AnswerEditor, 
     props:true,
   }
 ]
