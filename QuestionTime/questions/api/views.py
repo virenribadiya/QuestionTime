@@ -25,7 +25,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         import time
-        time.sleep(2)
+        time.sleep(0.2)
         return super().get_queryset()
 
 # /questions/slug/answer/

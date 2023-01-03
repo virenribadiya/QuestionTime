@@ -8,7 +8,13 @@
               Posted by :
               <span class="question-author">{{  question.author  }}</span>
             </p>
-            <h2>{{  question.content  }}</h2>
+            <h3>
+              <router-link 
+                :to="{name:'quesTion',params:{slug:question.slug}}"
+                class="question-link">
+              {{  question.content  }}
+              </router-link>
+            </h3>
             <p class="mb-0">
               Answers : {{  question.answers_count  }}
             </p>
@@ -70,6 +76,7 @@ export default {
   },
   created() {
     console.log("Created....life cycle hook");
+    document.title = "QuestionTime";
     this.getQuestions();
   }
 
@@ -80,5 +87,13 @@ export default {
 .question-author {
   font-weight: bold;
   color: #dc3545;
+}
+.question-link{
+  font-weight: 400;
+  color: black;
+  text-decoration: none;
+}
+.question-link:hover{
+  color:#343a40;
 }
 </style>
