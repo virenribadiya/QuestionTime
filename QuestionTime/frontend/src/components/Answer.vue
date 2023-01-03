@@ -15,7 +15,11 @@
                 @click="triggerDeleteAnswer">Yes, delete my answer!</button>
         </div>
         <div v-else>
-            <button class="btn btn-warning" @click="toggleLike">Like Answer ({{ likesCounter }})</button>
+            <button class="btn" 
+            @click="toggleLike"
+            :class="{'btn-warning':userLikedAnswer, 'btn-outline-danger':!userLikedAnswer}">
+                Like Answer &nbsp;<span class="badge bg-danger">{{likesCounter}}</span>
+            </button>
         </div>
     </div>
 
