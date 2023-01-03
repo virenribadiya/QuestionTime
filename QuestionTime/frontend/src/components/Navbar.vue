@@ -16,6 +16,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item me-4 mt-2" style="color: green; font-weight: bold;">
+                        Hello, {{userInfo}} 
+                    </li>
                     <li class="nav-item me-2">
                         <router-link class="btn btn-danger" :to="{name:'question-editor'}">
                             Ask Question ?
@@ -36,6 +39,11 @@
 <script>
 export default {
     name: "NavbarComponent",
+    data(){
+        return{
+            userInfo:window.localStorage.getItem('username')
+        }
+    }
 }
 
 </script>
